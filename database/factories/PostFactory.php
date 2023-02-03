@@ -19,8 +19,8 @@ class PostFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'title' => fake()->sentence(10),
-            'description' => fake()->sentence(10),
+            'title' => fake()->sentence(5),
+            'description' => fake()->sentence(20),
             'location' => fake()->sentence(5),
             'date' => fake()->date()
         ];
