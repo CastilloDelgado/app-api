@@ -1,9 +1,10 @@
 <?php
 
-use App\Models\Post;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FollowController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,40 +18,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// USERS SERVICES
-Route::get('users/{user}', function (User $user) {
-    return $user;
+// Auth Services
+Route::post('/login', [AuthController::class, 'store'])->name('login');
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'destroy'])->name('logout');
+
+// User Services
+Route::post('/register', [RegisterController::class, 'store'])->name('register');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/users/{user}', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/users/{user}/posts', [ProfileController::class, 'all'])->name('profile.posts.all');
 });
 
-
-// POSTS SERVICES
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Post Services
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/posts', [PostController::class, 'index'])->name('post.index');
+    Route::get('/posts_all', [PostController::class, 'all'])->name('post.index.all');
+    Route::get('/posts/{post}', [PostController::class, 'show'])->name('post.show');
+    Route::post('/posts', [PostController::class, 'store'])->name('post.store');
+    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('post.destroy');
 });
 
-Route::get('posts', function () {
-    return Post::with('user:id,name,usertag,avatar')->orderBy('id', 'desc')->latest()->paginate(10);
-});
-
-Route::get('posts/{post}', function (Post $post) {
-    return $post->load('user:id,name,usertag,avatar');
-});
-
-Route::post('posts', function (Request $request) {
-    sleep(2);
-    $attributes = $request->validate([
-        'title' => 'required',
-        'description' => 'required',
-        'location' => 'required',
-        'date' => 'required',
-    ]);
-    ;
-    $attributes['date'] = Carbon::createFromFormat('d/m/Y', $request->date);
-    $attributes['user_id'] = 1;
-
-    return Post::create($attributes);
-});
-
-Route::get('users/{user}/posts', function (User $user) {
-    return $user->posts()->with('user:id,name,usertag,avatar')->orderBy('id', 'desc')->latest()->paginate(10);
+// Follow Services
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/follow/{user}', [FollowController::class, 'store'])->name('user.follow');
+    Route::post('/unfollow/{user}', [FollowController::class, 'destroy'])->name('user.unfollow');
+    Route::post('/is_following/{user}', [FollowController::class, 'show'])->name('user.is_following');
 });

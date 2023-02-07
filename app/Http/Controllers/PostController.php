@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class PostController extends Controller
 {
@@ -15,7 +17,17 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $followers = auth()->user()->follows->pluck('id');
+        return Post::with('user:id,name,usertag,avatar')
+            ->whereIn('user_id', $followers)
+            ->orderBy('id', 'desc')
+            ->latest()
+            ->paginate(10);
+    }
+
+    public function all()
+    {
+        return Post::with('user:id,name,usertag,avatar')->orderBy('id', 'desc')->latest()->paginate(10);
     }
 
     /**
@@ -34,9 +46,19 @@ class PostController extends Controller
      * @param  \App\Http\Requests\StorePostRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePostRequest $request)
+    public function store(Request $request)
     {
-        //
+        $attributes = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'location' => 'required',
+            'date' => 'required',
+        ]);
+        ;
+        $attributes['date'] = Carbon::createFromFormat('d/m/Y', $request->date);
+        $attributes['user_id'] = auth()->id();
+
+        return Post::create($attributes);
     }
 
     /**
@@ -47,7 +69,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return $post->load('user:id,name,usertag,avatar');
     }
 
     /**
@@ -81,6 +103,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        abort_if($post->user->id !== auth()->id(), 403);
+        return response()->json($post->delete(), 200);
     }
 }

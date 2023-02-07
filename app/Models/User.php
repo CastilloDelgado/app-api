@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -21,11 +21,32 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'usertag',
+        'avatar'
     ];
 
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function follows()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'user_id', 'following_user_id');
+    }
+
+    public function follow(User $user)
+    {
+        return $this->follows()->attach($user);
+    }
+    public function unfollow(User $user)
+    {
+        return $this->follows()->detach($user);
+
+    }
+    public function isFollowing(User $user)
+    {
+        return $this->follows()->where('id', $user->id)->exists();
     }
 
     /**
