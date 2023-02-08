@@ -2,22 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\PostImage;
 use Illuminate\Http\Request;
 
-class ProfileController extends Controller
+class PostImageController extends Controller
 {
-
-    public function all(User $user)
-    {
-        return $user->posts()
-            ->with('user:id,name,usertag,avatar')
-            ->with('images')
-            ->orderBy('id', 'desc')
-            ->latest()
-            ->paginate(10);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -52,21 +41,21 @@ class ProfileController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\PostImage  $postImage
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(PostImage $postImage)
     {
-        return $user;
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\PostImage  $postImage
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(PostImage $postImage)
     {
         //
     }
@@ -75,44 +64,22 @@ class ProfileController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\PostImage  $postImage
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, PostImage $postImage)
     {
-        $user = auth()->user();
-
-        $attributes = $request->validate([
-            "name" => 'required',
-            "caption" => 'required'
-        ]);
-
-        $user["name"] = $attributes["name"];
-        $user["caption"] = $attributes["caption"];
-
-        $user->save();
-
-        return ($user);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\PostImage  $postImage
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(PostImage $postImage)
     {
-
-    }
-
-    public function updateImage(Request $request)
-    {
-        $user = auth()->user();
-
-        $user["avatar"] = $request->file('image')->store('profile_images');
-        $user->save();
-
-        return $user;
+        //
     }
 }

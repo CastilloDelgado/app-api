@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use App\Models\PostImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -18,7 +19,9 @@ class PostController extends Controller
     public function index()
     {
         $followers = auth()->user()->follows->pluck('id');
+
         return Post::with('user:id,name,usertag,avatar')
+            ->with('images')
             ->whereIn('user_id', $followers)
             ->orderBy('id', 'desc')
             ->latest()
@@ -27,7 +30,11 @@ class PostController extends Controller
 
     public function all()
     {
-        return Post::with('user:id,name,usertag,avatar')->orderBy('id', 'desc')->latest()->paginate(10);
+        return Post::with('user:id,name,usertag,avatar')
+            ->with('images')
+            ->orderBy('id', 'desc')
+            ->latest()
+            ->paginate(10);
     }
 
     /**
@@ -39,6 +46,7 @@ class PostController extends Controller
     {
         //
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -54,11 +62,24 @@ class PostController extends Controller
             'location' => 'required',
             'date' => 'required',
         ]);
-        ;
+
         $attributes['date'] = Carbon::createFromFormat('d/m/Y', $request->date);
         $attributes['user_id'] = auth()->id();
 
-        return Post::create($attributes);
+        $post = Post::create($attributes);
+
+        if ($request['images']) {
+            foreach ($request['images'] as $key => $file) {
+                $path = $request->file('images')[$key]->store('post_images');
+                var_dump($path);
+                PostImage::create([
+                    'post_id' => $post->id,
+                    'url' => $path
+                ]);
+            }
+        }
+
+        return $post;
     }
 
     /**
@@ -69,7 +90,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return $post->load('user:id,name,usertag,avatar');
+        return $post->load('user:id,name,usertag,avatar')->load('images');
     }
 
     /**
