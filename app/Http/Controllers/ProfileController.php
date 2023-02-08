@@ -73,9 +73,22 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $user = auth()->user();
+
+        $attributes = $request->validate([
+            "name" => 'required',
+            "caption" => 'required'
+        ]);
+
+        $user["name"] = $attributes["name"];
+        $user["caption"] = $attributes["caption"];
+
+        $user->save();
+
+        return ($user);
+
     }
 
     /**
@@ -86,6 +99,16 @@ class ProfileController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+    }
+
+    public function updateImage(Request $request)
+    {
+        $user = auth()->user();
+
+        $user["avatar"] = $request->file('image')->store('profile_images');
+        $user->save();
+
+        return $user;
     }
 }

@@ -26,7 +26,10 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'dest
 Route::post('/register', [RegisterController::class, 'store'])->name('register');
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users/{user}', [ProfileController::class, 'show'])->name('profile.show');
+    Route::post('/users', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/users/{user}/posts', [ProfileController::class, 'all'])->name('profile.posts.all');
+    // Update profile image
+    Route::post('/users/update_image', [ProfileController::class, 'updateImage'])->name('profile.update_image');
 });
 
 // Post Services

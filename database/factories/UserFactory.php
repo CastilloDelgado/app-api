@@ -20,7 +20,7 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'usertag' => fake()->unique()->word(),
-            'avatar' => "https://i.pravatar.cc/150?img=" . fake()->unique()->numberBetween(1, 100),
+            'avatar' => "/profile_images/default.jpg",
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'caption' => fake()->sentence(10),
