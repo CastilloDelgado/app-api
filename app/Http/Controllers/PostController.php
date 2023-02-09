@@ -90,7 +90,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return $post->load('user:id,name,usertag,avatar')->load('images');
+        return $post->load('user:id,name,usertag,avatar')->load('images')->load('comments.user');
     }
 
     /**

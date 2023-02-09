@@ -115,4 +115,14 @@ class ProfileController extends Controller
 
         return $user;
     }
+
+    public function updateBackgroundImage(Request $request)
+    {
+        $user = auth()->user();
+
+        $user["background_image"] = $request->file('image')->store('background_images');
+        $user->save();
+
+        return $user;
+    }
 }

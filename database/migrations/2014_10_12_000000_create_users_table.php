@@ -18,7 +18,8 @@ return new class extends Migration {
             $table->string('usertag')->unique();
             $table->string('email')->unique();
             $table->string('caption')->nullable();
-            $table->string('avatar')->default("https://i.pravatar.cc/150?img=50");
+            $table->string('avatar')->default("post_images/image_post_test_3.jpeg");
+            $table->string('background_image')->default("post_images/image_post_test_3.jpeg");
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

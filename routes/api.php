@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostReactionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +32,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users/{user}/posts', [ProfileController::class, 'all'])->name('profile.posts.all');
     // Update profile image
     Route::post('/users/update_image', [ProfileController::class, 'updateImage'])->name('profile.update_image');
+    // Update background image
+    Route::post('/users/update_background_image', [ProfileController::class, 'updateBackgroundImage'])->name('profile.update_background_image');
 });
 
 // Post Services
@@ -40,6 +44,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/posts', [PostController::class, 'store'])->name('post.store');
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('post.destroy');
 });
+
+// Comment Services
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/posts/{post}', [PostCommentController::class, 'store'])->name('post.comment.create');
+    Route::delete('/comments/{postComment}', [PostCommentController::class, 'destroy'])->name('post.comment.delete');
+});
+
+// Reaction Services
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/posts/{post}/reaction', [PostReactionController::class, 'store'])->name('post.reaction.create');
+    Route::delete('/posts/{post}/reaction', [PostReactionController::class, 'destroy'])->name('post.reaction.delete');
+});
+
 
 // Follow Services
 Route::middleware('auth:sanctum')->group(function () {
