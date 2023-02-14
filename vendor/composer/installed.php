@@ -1,15 +1,33 @@
 <?php return array(
     'root' => array(
         'name' => 'laravel/laravel',
-        'pretty_version' => 'v9.5.2',
-        'version' => '9.5.2.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'ee9806125170fb6272f74970a78417d962cd3c38',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'aws/aws-crt-php' => array(
+            'pretty_version' => 'v1.0.4',
+            'version' => '1.0.4.0',
+            'reference' => 'f5c64ee7c5fce196e2519b3d9b7138649efe032d',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../aws/aws-crt-php',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'aws/aws-sdk-php' => array(
+            'pretty_version' => '3.258.9',
+            'version' => '3.258.9.0',
+            'reference' => '1d42f8170ecc775a85e0efa96476caa2d4be13ae',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../aws/aws-sdk-php',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'brick/math' => array(
             'pretty_version' => '0.10.2',
             'version' => '0.10.2.0',
@@ -156,6 +174,15 @@
             'install_path' => __DIR__ . '/../hamcrest/hamcrest-php',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'hollodotme/fast-cgi-client' => array(
+            'pretty_version' => 'v3.1.7',
+            'version' => '3.1.7.0',
+            'reference' => '062182d4eda73c161cc2839783acc83096ec0f37',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../hollodotme/fast-cgi-client',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'illuminate/auth' => array(
             'dev_requirement' => false,
@@ -365,9 +392,9 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => 'v9.5.2',
-            'version' => '9.5.2.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'ee9806125170fb6272f74970a78417d962cd3c38',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -415,6 +442,15 @@
             'reference' => '74d0b287cc4ae65d15c368dd697aae71d62a73ad',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laravel/tinker',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'laravel/vapor-core' => array(
+            'pretty_version' => 'v2.28.0',
+            'version' => '2.28.0.0',
+            'reference' => 'f377fc6b49c86064f878a20663909a4158ce8c63',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravel/vapor-core',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -477,6 +513,15 @@
             'replaced' => array(
                 0 => '^1.0',
             ),
+        ),
+        'mtdowling/jmespath.php' => array(
+            'pretty_version' => '2.6.1',
+            'version' => '2.6.1.0',
+            'reference' => '9b87907a81b87bc76d19a7fb2d61e61486ee9edb',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../mtdowling/jmespath.php',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'myclabs/deep-copy' => array(
             'pretty_version' => '1.11.0',
@@ -541,6 +586,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'nyholm/psr7' => array(
+            'pretty_version' => '1.5.1',
+            'version' => '1.5.1.0',
+            'reference' => 'f734364e38a876a23be4d906a2a089e1315be18a',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nyholm/psr7',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'phar-io/manifest' => array(
             'pretty_version' => '2.0.3',
             'version' => '2.0.3.0',
@@ -558,6 +612,15 @@
             'install_path' => __DIR__ . '/../phar-io/version',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'php-http/message-factory' => array(
+            'pretty_version' => 'v1.0.2',
+            'version' => '1.0.2.0',
+            'reference' => 'a478cb11f66a6ac48d8954216cfed9aa06a501a1',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../php-http/message-factory',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'phpoption/phpoption' => array(
             'pretty_version' => '1.9.0',
@@ -709,8 +772,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '1.0.0 || 2.0.0 || 3.0.0',
+                0 => '1.0.0 || 2.0.0 || 3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache' => array(
@@ -769,6 +832,15 @@
             'replaced' => array(
                 0 => '4.7.3',
             ),
+        ),
+        'riverline/multipart-parser' => array(
+            'pretty_version' => '2.0.9',
+            'version' => '2.0.9.0',
+            'reference' => 'ebba10245b5a6e03a673ff52c547d05029caedab',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../riverline/multipart-parser',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'sebastian/cli-parser' => array(
             'pretty_version' => '1.0.1',
@@ -1133,6 +1205,15 @@
             'reference' => '9ead139f63dfa38c4e4a9049cc64a8b2748c83b7',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/process',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'symfony/psr-http-message-bridge' => array(
+            'pretty_version' => 'v2.1.4',
+            'version' => '2.1.4.0',
+            'reference' => 'a125b93ef378c492e274f217874906fb9babdebb',
+            'type' => 'symfony-bridge',
+            'install_path' => __DIR__ . '/../symfony/psr-http-message-bridge',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
